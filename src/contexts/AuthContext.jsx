@@ -8,6 +8,8 @@ const API_PARAMS = {
   headers: { 'Content-Type': 'application/json' }
 };
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -38,7 +40,7 @@ export const AuthProvider = ({ children }) => {
     const result = await signInWithPopup(auth, googleProvider);
     const fbUser = result.user;
 
-    const res = await fetch('/api/auth/google', {
+    const res = await fetch(`${API_URL}/api/auth/google`, {
       method: 'POST',
       ...API_PARAMS,
       body: JSON.stringify({
@@ -55,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const loginWithEmail = async (email, pass) => {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       ...API_PARAMS,
       body: JSON.stringify({ email, password: pass })
@@ -67,7 +69,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const registerWithEmail = async (formData) => {
-    const res = await fetch('/api/auth/register', {
+    const res = await fetch(`${API_URL}/api/auth/register`, {
       method: 'POST',
       ...API_PARAMS,
       body: JSON.stringify(formData)

@@ -5,11 +5,11 @@ import { useState, useEffect } from "react";
 export function Offers() {
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchOffers = async () => {
       try {
-        const res = await fetch('/api/vouchers');
+        const res = await fetch(`${API_URL}//api/vouchers`);
         if (!res.ok) throw new Error('Network response was not ok');
         const data = await res.json();
         

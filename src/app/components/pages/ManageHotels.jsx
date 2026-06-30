@@ -53,6 +53,7 @@ export default function ManageHotels() {
   const [otherPropertyType, setOtherPropertyType] = useState('');
   const [isOtherPropertyActive, setIsOtherPropertyActive] = useState(false);
   const [isOtherAmenityActive, setIsOtherAmenityActive] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   /**
    * ACTION: Xử lý khi người dùng chọn file ảnh từ máy tính
@@ -76,7 +77,7 @@ export default function ManageHotels() {
    */
   const fetchHotels = async () => {
     try {
-      const res = await fetch('/api/manager/hotels', {
+      const res = await fetch(`${API_URL}/api/manager/hotels`, {
         headers: { 'Authorization': `Bearer ${user?.token}` }
       });
       const data = await res.json();
@@ -116,8 +117,8 @@ export default function ManageHotels() {
     }
 
     const url = editingHotel
-      ? `/api/manager/hotels/${editingHotel.idStr}`
-      : '/api/manager/hotels';
+      ? `${API_URL}/api/manager/hotels/${editingHotel.idStr}`
+      : `${API_URL}/api/manager/hotels`;
 
     const method = editingHotel ? 'PUT' : 'POST';
 
@@ -193,7 +194,7 @@ export default function ManageHotels() {
 
     try {
       const res = await fetch(
-        `/api/manager/hotels/${id}`,
+        `${API_URL}/api/manager/hotels/${id}`,
         {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${user?.token}` }
@@ -518,4 +519,4 @@ export default function ManageHotels() {
       )}
     </div>
   );
-}
+}

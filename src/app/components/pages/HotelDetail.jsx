@@ -29,9 +29,10 @@ export function HotelDetail() {
   
   // roomId -> quantity selected
   const [roomSelections, setRoomSelections] = useState({});
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    fetch(`/api/hotels/${id}`)
+    fetch(`${API_URL}/api/hotels/${id}`)
       .then(res => res.json())
       .then(data => {
         if (!data.message) {
@@ -128,7 +129,7 @@ export function HotelDetail() {
       return;
     }
     try {
-      const res = await fetch('/api/users/favorites/toggle', {
+      const res = await fetch(`${API_URL}/api/users/favorites/toggle`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

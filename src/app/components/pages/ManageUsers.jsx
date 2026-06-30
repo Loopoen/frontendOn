@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 
 export default function ManageUsers() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const { user } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,7 +16,7 @@ export default function ManageUsers() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('/api/manager/users', {
+        const res = await fetch(`${API_URL}/api/manager/users`, {
           headers: { 'Authorization': `Bearer ${user?.token}` }
         });
         const data = await res.json();

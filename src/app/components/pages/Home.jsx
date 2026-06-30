@@ -7,10 +7,11 @@ export function Home() {
   const [vouchers, setVouchers] = useState([]);
   const [copiedCode, setCopiedCode] = useState(null);
 
+  const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchVouchers = async () => {
       try {
-        const res = await fetch('/api/vouchers');
+        const res = await fetch(`${API_URL}/api/vouchers`);
         if (!res.ok) throw new Error('Network response was not ok');
         const data = await res.json();
         setVouchers(data.slice(0, 3));
@@ -34,7 +35,7 @@ export function Home() {
   const [HOTELS, setHotels] = useState([]);
 
   useEffect(() => {
-    fetch('/api/destinations')
+    fetch(`${API_URL}/api/destinations`)
       .then(res => {
         if (!res.ok) throw new Error('Network response was not ok');
         return res.json();
@@ -45,7 +46,7 @@ export function Home() {
       })
       .catch(console.error);
 
-    fetch('/api/hotels')
+    fetch(`${API_URL}/api/hotels`)
       .then(res => {
         if (!res.ok) throw new Error('Network response was not ok');
         return res.json();

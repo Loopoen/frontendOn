@@ -12,6 +12,8 @@ export default function ManageVouchers() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingVoucher, setEditingVoucher] = useState(null);
 
+
+  const API_URL = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     code: '',
     label: '',
@@ -33,7 +35,7 @@ export default function ManageVouchers() {
   const fetchVouchers = async () => {
     if (!user?.token) return;
     try {
-      const res = await fetch('http://localhost:5000/api/manager/vouchers', {
+      const res = await fetch(`${API_URL}/api/manager/vouchers`, {
         headers: { 'Authorization': `Bearer ${user.token}` }
       });
       const data = await res.json();
@@ -71,8 +73,8 @@ export default function ManageVouchers() {
     e.preventDefault();
 
     const url = editingVoucher 
-      ? `http://localhost:5000/api/manager/vouchers/${editingVoucher._id}`
-      : 'http://localhost:5000/api/manager/vouchers';
+      ? `${API_URL}/api/manager/vouchers/${editingVoucher._id}`
+      : '${API_URL}/api/manager/vouchers';
     
     const method = editingVoucher ? 'PUT' : 'POST';
 
@@ -122,7 +124,7 @@ export default function ManageVouchers() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/manager/vouchers/${id}`,
+        `${API_URL}/api/manager/vouchers/${id}`,
         {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${user?.token}` }

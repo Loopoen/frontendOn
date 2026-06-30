@@ -16,9 +16,11 @@ export function GuestReviews({ hotelId }) {
   const [editText, setEditText] = useState('');
   const [editRating, setEditRating] = useState(5);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const fetchComments = async () => {
     try {
-      const res = await fetch(`/api/comments/${hotelId}`);
+      const res = await fetch(`${API_URL}/api/comments/${hotelId}`);
       const data = await res.json();
       if (data.success) {
         setComments(data.comments);
@@ -40,7 +42,7 @@ export function GuestReviews({ hotelId }) {
 
     requireAuth(async () => {
       try {
-        const res = await fetch('/api/comments', {
+        const res = await fetch(`${API_URL}/api/comments`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -71,7 +73,7 @@ export function GuestReviews({ hotelId }) {
 
     requireAuth(async () => {
       try {
-        const res = await fetch('/api/comments', {
+        const res = await fetch(`${API_URL}/api/comments`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -99,7 +101,7 @@ export function GuestReviews({ hotelId }) {
     if (!window.confirm('Bạn có chắc muốn xóa bình luận này?')) return;
     
     try {
-      const res = await fetch(`/api/comments/${id}`, {
+      const res = await fetch(`${API_URL}/api/comments/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${user.token}` }
       });
@@ -118,7 +120,7 @@ export function GuestReviews({ hotelId }) {
       const payload = { content: editText };
       if (!parentId) payload.rating = editRating;
 
-      const res = await fetch(`/api/comments/${id}`, {
+      const res = await fetch(`${API_URL}/api/comments/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -6,6 +6,7 @@ import { Navigate, Link } from "react-router-dom";
 export function Profile() {
   const { user, updateUser, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("profile");
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Profile Edit State
   const [phone, setPhone] = useState(user?.phone || "");
@@ -25,7 +26,7 @@ export function Profile() {
   useEffect(() => {
     if (user && activeTab === "bookings") {
       setLoadingBookings(true);
-      fetch(`/api/bookings/user/${user.id}`, {
+      fetch(`${API_URL}/api/bookings/user/${user.id}`, {
         headers: { "Authorization": `Bearer ${user.token}` }
       })
         .then(res => res.json())
@@ -36,7 +37,7 @@ export function Profile() {
         .catch(() => setLoadingBookings(false));
     } else if (user && activeTab === "favorites") {
       setLoadingFavorites(true);
-      fetch(`/api/users/favorites`, {
+      fetch(`${API_URL}/api/users/favorites`, {
         headers: { "Authorization": `Bearer ${user.token}` }
       })
         .then(res => res.json())
@@ -56,7 +57,7 @@ export function Profile() {
     e.preventDefault();
     setIsSaving(true);
     try {
-      const res = await fetch(`/api/users/profile/${user.id}`, {
+      const res = await fetch(`${API_URL}/api/users/profile/${user.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

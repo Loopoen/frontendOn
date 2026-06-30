@@ -20,6 +20,7 @@ import html2canvas from "html2canvas";
  * Logic: Xử lý quy trình đặt phòng, tính toán giá tiền, áp dụng voucher và xuất hóa đơn PDF
  */
 export function Checkout() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const { id } = useParams(); // Lấy ID khách sạn từ URL
   const navigate = useNavigate();
 
@@ -72,7 +73,7 @@ export function Checkout() {
    * EFFECT: Lấy dữ liệu Khách sạn và Voucher khi trang web được tải
    */
   useEffect(() => {
-    fetch("/api/vouchers")
+    fetch(`${API_URL}/api/vouchers`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setAvailableVouchers(data);
@@ -80,7 +81,7 @@ export function Checkout() {
       .catch(console.error);
 
     if (id && id !== "undefined") {
-      fetch(`/api/hotels/${id}`)
+      fetch(`${API_URL}/api/hotels/${id}`)
         .then(res => res.json())
         .then(data => {
           if (!data.message) {
@@ -667,4 +668,4 @@ export function Checkout() {
       </div>
     </div>
   );
-}
+}
